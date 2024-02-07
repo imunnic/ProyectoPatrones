@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OficinaCorreos {
+  private static OficinaCorreos instancia = null;
   private int numEnvios;
   private List<EnvioWrapper> envios;
   private List<Envio> tiposEnvio;
   private EnvioFactory envioNacional;
   private EnvioFactory envioInternacional;
   
-  public OficinaCorreos() {
+  private OficinaCorreos() {
     reiniciarEnvios();
     tiposEnvio = new ArrayList<Envio>();
     envios = new ArrayList<EnvioWrapper>();
@@ -79,5 +80,12 @@ public class OficinaCorreos {
     } while (!validarTipoEnvio(respuesta, tiposEnvio));
     return respuesta;
   }
+  //Singleton
+  public static OficinaCorreos getInstance() {
+    if (instancia == null) {
+        instancia = new OficinaCorreos();
+    }
+    return instancia;
+}
   
 }
