@@ -7,11 +7,15 @@ public class OficinaCorreos {
   private int numEnvios;
   private List<EnvioWrapper> envios;
   private List<Envio> tiposEnvio;
+  private EnvioFactory envioNacional;
+  private EnvioFactory envioInternacional;
   
   public OficinaCorreos() {
     reiniciarEnvios();
     tiposEnvio = new ArrayList<Envio>();
     envios = new ArrayList<EnvioWrapper>();
+    envioNacional = new EnvioNacionalFactory();
+    envioInternacional = new EnvioInternacionalFactory();
     tiposEnvio.add(new EnvioNacional());
     tiposEnvio.add(new EnvioInternacional());
   }
@@ -22,6 +26,7 @@ public class OficinaCorreos {
     System.out.println("¿Quiere realizar un envio?");
     while (MyInput.readString().equals("s")) {
       envios.add(crearEnvio());
+      numEnvios++;
       System.out.println("¿Quiere realizar otro envío?");
     }
     for (EnvioWrapper envioWrapper : envios) {
@@ -39,35 +44,11 @@ public class OficinaCorreos {
     String tipoEnvio = solicitarEnvio();
     System.out.println(tipoEnvio);
     if (Integer.parseInt(tipoEnvio) == 1) {
-      envio = crearEnvioNacional();//TODO implementar factory
+      envio = envioNacional.crearEnvio(numEnvios);
     } else if (Integer.parseInt(tipoEnvio) == 2) {
-      envio = crearEnvioInternacional(); //TODO implementar factory
+      envio = envioInternacional.crearEnvio(numEnvios);
     }
-    envio = solicitarComplementos(envio);
     return envio;
-  }
-
-  private EnvioWrapper solicitarComplementos(EnvioWrapper envio) {
-    EnvioWrapper envioFinal = envio;
-    String respuesta;
-    System.out.println("¿Quiere que el envío sea certificado?");
-    respuesta = MyInput.readString();
-    if (respuesta.equals("s")){
-      envioFinal = new EnvioCertificado(envioFinal);
-    }
-    System.out.println("¿Quiere que el envío sea urgente?");
-    respuesta = MyInput.readString();
-    if (respuesta.equals("s")){
-      envioFinal = new EnvioUrgente(envioFinal);
-    }
-    System.out.println("¿Quiere asegurar el envío?");
-    respuesta = MyInput.readString();
-    if (respuesta.equals("s")){
-      System.out.println("Introduzca el valor aproximado del envio");
-      float valor = MyInput.readFloat();//TODO asegurar el contenido de valor;
-      envioFinal = new EnvioAsegurado(envioFinal,valor);
-    }
-    return envioFinal;
   }
 
   private boolean validarTipoEnvio(String tipo, List tipos) {
@@ -99,50 +80,4 @@ public class OficinaCorreos {
     return respuesta;
   }
   
-  private float solicitarPrecioBasico() {
-    System.out.println("Indique el precio básico");
-    return MyInput.readFloat();
-  }
-  
-  private float solicitarPeso() {
-    System.out.println("Indique el peso");
-    return MyInput.readFloat();
-  }
-  
-  private EnvioWrapper crearEnvioNacional() {
-    float precio=0f;
-    boolean precioOk;
-    do {
-      try {
-        precio = solicitarPrecioBasico();        
-        precioOk = true;
-      } catch (Exception e) {
-        precioOk = false;
-      }
-    } while (!precioOk);
-    return new EnvioNacional(this.numEnvios, precio, "");
-  }
-  
-  private EnvioWrapper crearEnvioInternacional() {
-    float precio = 0f;
-    float peso = 0f;
-    boolean floatOk;
-    do {
-      try {
-        precio = solicitarPrecioBasico();        
-        floatOk = true;
-      } catch (Exception e) {
-        floatOk = false;
-      }
-    } while (!floatOk);
-    do {
-      try {
-        peso = solicitarPeso();        
-        floatOk = true;
-      } catch (Exception e) {
-        floatOk = false;
-      }
-    } while (!floatOk);
-    return new EnvioInternacional(this.numEnvios, precio, "",peso);
-  }
 }
