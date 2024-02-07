@@ -14,5 +14,11 @@ public class EnvioUrgente implements EnvioWrapper {
     this.envio = envio;
   }
 
+  @Override
+  public String descripcion() {
+    // TODO Auto-generated method stub
+    return envio.descripcion() + ", urgente";
+  }
+
   
 }

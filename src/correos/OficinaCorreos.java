@@ -31,7 +31,7 @@ public class OficinaCorreos {
       System.out.println("¿Quiere realizar otro envío?");
     }
     for (EnvioWrapper envioWrapper : envios) {
-      System.out.println(envioWrapper.getCoste()); //TODO imprimir correctamente los envíos
+      System.out.println(envioWrapper.envioToString()); //TODO imprimir correctamente los envíos
     }
     System.out.println("Que tenga un buen día");
   }
@@ -73,7 +73,7 @@ public class OficinaCorreos {
       System.out.println("Indique el número correspondiente:");
       int i = 1;
       for (Envio tipo : tiposEnvio) {
-        System.out.println(i + ". " + tipo.envioToString());
+        System.out.println(i + ". " + tipo.toString());
         i++;
       }
       respuesta = MyInput.readString();

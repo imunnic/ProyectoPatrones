@@ -19,10 +19,15 @@ public class EnvioInternacional extends Envio {
   }
 
   @Override
-  public String envioToString() {
-    // TODO Auto-generated method stub
-    return "Envío Internacional";
+  public String descripcion() {
+    return "Envio nº " + super.getId() + ": envio internacional" ;
   }
+  
+  @Override
+  public String toString() {
+    return "Envio Internacional";
+  }
+  
   
   
   

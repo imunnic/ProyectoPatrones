@@ -25,6 +25,4 @@ public abstract class Envio implements EnvioWrapper {
     this.coste = coste;
     this.lugarEnvio = lugarEnvio;
   }
-  
-  public abstract String envioToString();
 }

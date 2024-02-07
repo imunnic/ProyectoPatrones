@@ -4,7 +4,6 @@ public class EnvioNacional extends Envio {
 
   @Override
   public float getCoste() {
-    // TODO Auto-generated method stub
     return super.getCoste();
   }
 
@@ -13,14 +12,16 @@ public class EnvioNacional extends Envio {
   }
   public EnvioNacional(int id, float coste, String lugarEnvio) {
     super(id, coste, lugarEnvio);
-    // TODO Auto-generated constructor stub
   }
 
   @Override
-  public String envioToString() {
-    // TODO Auto-generated method stub
-    return "Envío Nacional";
+  public String descripcion() {
+    return "Envio nº " + super.getId() + ": envio nacional" ;
   }
-
+  
+  @Override
+  public String toString() {
+    return "Envio Nacional";
+  }
   
 }

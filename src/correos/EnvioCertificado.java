@@ -6,12 +6,16 @@ public class EnvioCertificado implements EnvioWrapper {
   
   @Override
   public float getCoste() {
-    // TODO Auto-generated method stub
     return envio.getCoste() + SOBRECARGO;
   }
   
   public EnvioCertificado(EnvioWrapper envio) {
     this.envio = envio;
+  }
+
+  @Override
+  public String descripcion() {
+    return envio.descripcion() + ", certificado";
   }
 
 }

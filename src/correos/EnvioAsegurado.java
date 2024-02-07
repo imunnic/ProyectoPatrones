@@ -13,5 +13,11 @@ public class EnvioAsegurado implements EnvioWrapper {
     this.valorAproximado = valorAproximado;
   }
 
+  @Override
+  public String descripcion() {
+    // TODO Auto-generated method stub
+    return envio.descripcion() + ", asegurado";
+  }
+
   
 }
