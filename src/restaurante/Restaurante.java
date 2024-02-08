@@ -1,15 +1,30 @@
 package restaurante;
 
 public class Restaurante {
-  private ProductoCarta carta;
+  private SeccionCarta carta;
+  
+  public SeccionCarta getCarta() {
+    return carta;
+  }
   
   public Restaurante() {
-    carta = new SeccionCarta("s000", "carta");
+    carta = new SeccionCarta();
   }
   
-  public void nuevaSeccion(String id, String nombre) {
-    String idSeccion = id + "-" + nombre.substring(0, 1) + carta.getSubProductos();
-    ProductoCarta nuevaSeccion = new SeccionCarta(idSeccion, nombre);
-    carta.
+  public void agregarSeccionCarta(SeccionCarta seccion) {
+    carta.agregar(seccion);
   }
+  
+  public void agregarComponenteCarta(String idSeccion, String nombre, float coste) {
+    carta.recuperar(idSeccion).agregar(new  Producto(carta.recuperar(idSeccion), nombre, coste));
+  }
+  
+  public void eliminarComponenteCarta(String id) {
+    carta.eliminar(carta.recuperar(id));
+  }
+  
+  public void mostrarCarta() {
+    carta.mostrarInformacion();
+  }
+
 }

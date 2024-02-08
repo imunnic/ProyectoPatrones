@@ -3,37 +3,66 @@ package restaurante;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeccionCarta implements ProductoCarta {
-  private List<ProductoCarta> productos;
-  private String id;
-  private String nombre;
+public class SeccionCarta extends ComponenteCarta{
+  private List<ComponenteCarta> componentes;
   
-  public SeccionCarta(String id, String nombre) {
-    productos = new ArrayList<ProductoCarta>();
-    this.nombre = nombre;
-    this.id = id;
+  public SeccionCarta() {
+    super("c","carta");
+    componentes = new ArrayList<ComponenteCarta>();
   }
   
-  public void agregarProducto(ProductoCarta producto) {
-    productos.add(producto);
+  public SeccionCarta(ComponenteCarta componente, String nombre) {
+    super(componente, nombre);
+    super.setIdNum(componente.tamanoComponente() + 1);
+    super.setId(componente.getId() + "-s" + String.format("%03d", super.getIdNum()));
+    componentes = new ArrayList<ComponenteCarta>();
   }
-  
-  public void eliminarProducto(ProductoCarta producto) {
-    productos.remove(producto);
-  }
-  
+
   @Override
-  public int getSubProductos() {
-    return productos.size();
+  public void agregar(ComponenteCarta componente) {
+    if (componentes.contains(componente)) {
+      System.err.println("Este componente del menú ya está agregado");
+    } else {
+      componentes.add(componente);
+    }
   }
-  
+
   @Override
-  public String stringProducto() {
-    String retorno = nombre + ":\n";
-    for (ProductoCarta productoCarta : productos) {
-      retorno += "  - " + productoCarta.stringProducto() + "\n";
+  public void eliminar(ComponenteCarta componente) { 
+    if(componentes.contains(componente)) {
+      componentes.remove(componente);
+    } else {
+      for (ComponenteCarta componenteCarta : componentes) {
+        componenteCarta.eliminar(componente);
+      }
+    }
+  }
+
+  @Override
+  public ComponenteCarta recuperar(String id) {
+    if (this.getId().equals(id)) return this;
+    else {
+      for (ComponenteCarta componente : componentes)
+        if (componente.recuperar(id) != null)
+          if (componente.recuperar(id).getId().equals(id))
+            return componente.recuperar(id);
+      return null;
+    }
+  }
+
+  @Override
+  public int tamanoComponente() {
+    return componentes.size();
+  }
+
+  @Override
+  public String mostrarInformacion() {
+    String retorno = super.getId() + " - Sección de " + super.getNombre() + ":\n";
+    for (ComponenteCarta componenteCarta : componentes) {
+      retorno += componenteCarta.mostrarInformacion();
     }
     return retorno;
+    
   }
 
 }
